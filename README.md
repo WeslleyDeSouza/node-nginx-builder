@@ -99,3 +99,11 @@ server
 	}
 }
 ```
+
+How to use:
+```
+const nginxBuilder = new NginxBuilder(yourConfig);
+
+nginxBuilder.saveToFile(nginxBuilder.build())
+
+```
