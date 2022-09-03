@@ -1,4 +1,4 @@
-# Simple Nginx configuration builder
+# Simple Nginx configuration builder - NodeJS 
 ![Heading](https://www.f5.com/content/dam/f5-com/page-assets-en/home-en/products/nginx/2020/nginx-product-icon-open-source_1100x481.jpg)
 
 Config:
