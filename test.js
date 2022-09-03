@@ -6,8 +6,8 @@ const nginxBuilder = new NginxBuilder({
     fileName: "docker.webserver.conf",
     apps: [
         {
-            name: "myapp",
-            serverName: "myapp.domain.local myapp.domain.ch",
+            name: "app1",
+            serverName: "app1.domain.local app1.domain.ch",
             port: 80,
             proxy: [
                 {
@@ -26,7 +26,32 @@ const nginxBuilder = new NginxBuilder({
             locations:[
                 {
                     locationPath:'/',
-                    path: "/var/www/myapp",
+                    path: "/var/www/app1",
+                }
+            ]
+        },
+        {
+            name: "app2",
+            serverName: "app2.domain.local app2.domain.ch",
+            port: 80,
+            proxy: [
+                {
+                    locationPath:' /api/',
+                    host: "http://host.docker.internal",
+                    path:'/api/',
+                    port: 8004,
+                },
+                {
+                    locationPath:' /api/docs/',
+                    host: "http://host.docker.internal",
+                    path:'/swagger/',
+                    port: 8004,
+                },
+            ],
+            locations:[
+                {
+                    locationPath:'/',
+                    path: "/var/www/app2",
                 }
             ]
         },
