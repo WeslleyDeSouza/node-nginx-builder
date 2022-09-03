@@ -1,17 +1,14 @@
 const path = require('path')
 const { NginxBuilder } = require( "./dist/index" );
 
-
-
 const nginxBuilder = new NginxBuilder({
     outputPath: path.resolve(__dirname, "config"),
-    fileName: "local.webserver.conf",
+    fileName: "docker.webserver.conf",
     apps: [
         {
-            name: "business",
-            serverName: "business.movit.local business.movit.ch",
+            name: "myapp",
+            serverName: "myapp.domain.local myapp.domain.ch",
             port: 80,
-
             proxy: [
                 {
                     locationPath:' /api/',
@@ -19,11 +16,17 @@ const nginxBuilder = new NginxBuilder({
                     path:'/api/',
                     port: 8003,
                 },
+                {
+                    locationPath:' /api/docs/',
+                    host: "http://host.docker.internal",
+                    path:'/swagger/',
+                    port: 8003,
+                },
             ],
             locations:[
                 {
                     locationPath:'/',
-                    path: "/var/www/business",
+                    path: "/var/www/myapp",
                 }
             ]
         },
