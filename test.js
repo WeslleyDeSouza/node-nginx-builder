@@ -42,6 +42,12 @@ const nginxBuilder = new NginxBuilder({
                     port: 8004,
                 },
                 {
+                    locationPath:' /api/file/image/',
+                    host: "http://host.docker.internal",
+                    path:'/api/upload/',
+                    port: 8005,
+                },
+                {
                     locationPath:' /api/docs/',
                     host: "http://host.docker.internal",
                     path:'/swagger/',
