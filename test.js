@@ -64,4 +64,9 @@ const nginxBuilder = new NginxBuilder({
     ],
 })
 
-nginxBuilder.saveToFile(nginxBuilder.build())
+nginxBuilder.saveToFile(nginxBuilder.build(),{
+    encoding:  'utf8',
+    indent: '\t',
+    newLineSeparator: '\n',
+    maxStatementLength: 80, // if statement is longer than that it will be splitted into multiple lines
+})

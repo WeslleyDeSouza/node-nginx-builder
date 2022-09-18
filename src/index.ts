@@ -1,5 +1,6 @@
 import path from 'path';
 import fs from 'fs';
+import { nginxFormat } from 'nginx-format';
 
 
 // ---- Blocks
@@ -209,8 +210,13 @@ export class NginxBuilder {
 
     }
 
-    saveToFile(content){
+    saveToFile(content, formattedConfig  = undefined){
         const  {fileName,outputPath} = this.config.getOutputOptions()
+
+        if(formattedConfig){
+            content = nginxFormat(content)
+        }
+
         fs?.writeFileSync(
             path.join(outputPath,fileName)
             ,content,"utf8")
