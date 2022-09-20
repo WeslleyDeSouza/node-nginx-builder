@@ -14,13 +14,13 @@ new NginxBuilder({
             proxy: [
                 {
                     locationPath:' /api/',
-                    host: "http://host.docker.internal",
+                    host: "host.docker.internal",
                     path:'/api/',
                     port: 8003,
                 },
                 {
                     locationPath:' /api/docs/',
-                    host: "http://host.docker.internal",
+                    host: "host.docker.internal",
                     path:'/swagger/',
                     port: 8003,
                 },
@@ -39,13 +39,13 @@ new NginxBuilder({
             proxy: [
                 {
                     locationPath:' /api/',
-                    host: "http://host.docker.internal",
+                    host: "host.docker.internal",
                     path:'/api/',
                     port: 8004,
                 },
                 {
                     locationPath:' /api/docs/',
-                    host: "http://host.docker.internal",
+                    host: "host.docker.internal",
                     path:'/swagger/',
                     port: 8004,
                 },
@@ -73,11 +73,11 @@ server
 	}
 	location /api/
 	{
-		proxy_pass http://http://host.docker.internal:8003/api/;
+		proxy_pass http://host.docker.internal:8003/api/;
 	}
 	location /api/docs/
 	{
-		proxy_pass http://http://host.docker.internal:8003/swagger/;
+		proxy_pass http://host.docker.internal:8003/swagger/;
 	}
 }
 
@@ -92,11 +92,11 @@ server
 	}
 	location /api/
 	{
-		proxy_pass http://http://host.docker.internal:8004/api/;
+		proxy_pass http://host.docker.internal:8004/api/;
 	}
 	location /api/docs/
 	{
-		proxy_pass http://http://host.docker.internal:8004/swagger/;
+		proxy_pass http://host.docker.internal:8004/swagger/;
 	}
 }
 ```
