@@ -101,8 +101,16 @@ server
 }
 ```
 
+Installation:
+``` 
+npm i --save nginx-builder
+```
+
+
 How to use:
 ```
+import { NginxBuilder } from 'nginx-builder'
+
 const nginxBuilder = new NginxBuilder(yourConfig);
 
 nginxBuilder.saveToFile(nginxBuilder.build(),{
