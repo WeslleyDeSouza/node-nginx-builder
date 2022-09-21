@@ -5,13 +5,15 @@ import { nginxFormat } from 'nginx-format';
 
 // ---- Blocks
 abstract class NginxBlock {
+    abstract blockName: string;
+
     abstract get rawTemplate(): string;
 
     abstract get template(): string;
 }
 
 class LocationBlock extends NginxBlock {
-    blockName = 'location'
+    blockName:string = 'location'
 
     constructor(protected locationPath:string, private filePath = '') {
         super();
@@ -79,10 +81,8 @@ class ReverseProxyBlock extends LocationBlock {
 }
 
 class ServerBlock extends NginxBlock {
+    blockName:string = 'server'
     protected children:NginxBlock[] = []
-
-    blockName = 'server'
-
     constructor(protected serverName:string,protected port:number) {
         super();
     }
