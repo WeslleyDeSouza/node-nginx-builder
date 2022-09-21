@@ -11,7 +11,7 @@ const nginxBuilder = new NginxBuilder({
             port: 80,
             proxy: [
                 {
-                    locationPath:' /api/',
+                    locationPath:' /api',
                     host: "http://host.docker.internal",
                     path:'/api/',
                     port: 8003,
@@ -36,7 +36,7 @@ const nginxBuilder = new NginxBuilder({
             port: 80,
             proxy: [
                 {
-                    locationPath:' /api/',
+                    locationPath:' /api',
                     host: "http://host.docker.internal",
                     path:'/api/',
                     port: 8004,

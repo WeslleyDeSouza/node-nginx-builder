@@ -189,11 +189,11 @@ export class NginxBuilder {
         for(let app of this.getApps()){
             const serverBlock = new ServerBlock(app.serverName,app.port)
 
-            app.locations.forEach(location =>{
+            app.locations?.forEach(location =>{
                 const locationBlock = new LocationBlock(location.locationPath,location.path);
                 serverBlock.injectBlock(locationBlock)
             })
-            app.proxy.forEach(proxy =>{
+            app.proxy?.forEach(proxy =>{
                 const reserveProxyBlock = new ReverseProxyBlock(
                     proxy.locationPath,
                     proxy.host,
