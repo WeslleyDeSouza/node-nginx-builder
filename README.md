@@ -24,6 +24,17 @@ new NginxBuilder({
                     path:'/swagger/',
                     port: 8003,
                 },
+                {
+                    locationPath: "^/api/app/(?<endpoint>.+)$",
+                    path: "/api",
+                    host: "$endpoint.app.external.ch",
+                    options:{
+                        locationPrefix:'~',
+                        https: true,
+                        rewrite:'^/api/app/(.+) /api break',
+                    }
+
+                }
             ],
             locations:[
                 {
@@ -78,6 +89,10 @@ server
 	location /api/docs/
 	{
 		proxy_pass http://host.docker.internal:8003/swagger/;
+	}
+	location ~ ^/api/app/(?<endpoint>.+)$ {
+		rewrite ^/api/app/(.+) /api break;
+		proxy_pass https://$endpoint.app.external.ch/api;
 	}
 }
 

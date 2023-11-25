@@ -2,6 +2,7 @@ import path from 'path';
 import fs from 'fs';
 import { nginxFormat } from 'nginx-format';
 
+const filterEmpty = (x:string) =>!!x
 
 // ---- Blocks
 abstract class NginxBlock {
@@ -22,6 +23,7 @@ class LocationBlock extends NginxBlock {
     get lineBlock(){
         return [this.blockName, this.locationPath, '{'].join(' ')
     }
+
 
     get lineFileRoot(){
         return  ['root', this.filePath + ';'].join(' ')
@@ -49,30 +51,42 @@ class ReverseProxyBlock extends LocationBlock {
                 protected host:string,
                 protected port:number,
                 protected proxyPath:string,
+                protected options?:IProxyOptions,
     ) {
         super(locationPath);
     }
 
     get hostProxy(){
-        return 'http://'+this.host
+        return (this.options?.https ? 'https://' : 'http://') + this.host
     }
     get portProxy(){
         return this.port
     }
 
-    get pathProxy(){
+    get pathProxy():string{
         return this.proxyPath
     }
 
-    get lineProxy(){
-        return ['proxy_pass',' ',this.hostProxy,':',this.portProxy,this.pathProxy+';'].join('')
+    get lineBlock():string{
+        return [this.blockName, `${this.options?.locationPrefix ? this.options?.locationPrefix  +' ' : '' }`, this.locationPath, '{'].filter(filterEmpty).join(' ')
+    }
+
+    get lineProxy():string{
+        return ['proxy_pass',` `,this.hostProxy,this.portProxy ? ':'+this.portProxy:'',this.pathProxy+';'].join('')
+    }
+
+
+
+    get lineRewrite():string | null{
+        return this.options?.rewrite ? `rewrite ${this.options?.rewrite};` : null
     }
     get rawTemplate() {
         return [
             this.lineBlock,
+            this.lineRewrite,
             this.lineProxy,
             '}'
-        ].join('\n')
+        ].filter(filterEmpty).join('\n')
     }
 
     get template(): string {
@@ -117,9 +131,20 @@ class ServerBlock extends NginxBlock {
         return block
     }
 }
+
 // -----
 
 //---- Options
+
+interface IProxy{
+    locationPath:string
+    host: string;
+    path?: string;
+    port: number;
+    options?:IProxyOptions
+}
+interface IProxyOptions{https?:boolean,rewrite?:string,locationPrefix?:string}
+
 interface IOptions {
     // outputPath where .conf should be saved
     outputPath: string;
@@ -137,12 +162,7 @@ interface IOptions {
             locationPath:string,
             path: string
         }[]
-        proxy?: {
-            locationPath:string
-            host: string;
-            path?: string;
-            port: number;
-        }[];
+        proxy?:IProxy[];
     }[];
 }
 
@@ -198,7 +218,8 @@ export class NginxBuilder {
                     proxy.locationPath,
                     proxy.host,
                     proxy.port,
-                    proxy.path
+                    proxy.path,
+                    proxy.options
                 );
                 serverBlock.injectBlock(reserveProxyBlock)
             })

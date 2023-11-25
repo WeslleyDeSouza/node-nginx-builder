@@ -11,16 +11,27 @@ const nginxBuilder = new NginxBuilder({
             port: 80,
             proxy: [
                 {
+                    locationPath:' /api/docs/',
+                    host: "http://host.docker.internal",
+                    path:'/swagger/',
+                    port: 8003,
+                },
+                {
                     locationPath:' /api',
                     host: "http://host.docker.internal",
                     path:'/api/',
                     port: 8003,
                 },
                 {
-                    locationPath:' /api/docs/',
-                    host: "http://host.docker.internal",
-                    path:'/swagger/',
-                    port: 8003,
+                    locationPath: "^/api/app/(?<endpoint>.+)$",
+                    path: "/api",
+                    host: "$endpoint.app.external.ch",
+                    options:{
+                        locationPrefix:'~',
+                        https: true,
+                        rewrite:'^/api/app/(.+) /api break',
+                    }
+
                 },
             ],
             locations:[
