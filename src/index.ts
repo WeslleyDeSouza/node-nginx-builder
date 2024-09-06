@@ -1,6 +1,5 @@
 import path from 'path';
 import fs from 'fs';
-import { nginxFormat } from 'nginx-format';
 
 const filterEmpty = (x:string) =>!!x
 
@@ -235,6 +234,7 @@ export class NginxBuilder {
         const  {fileName,outputPath} = this.config.getOutputOptions()
 
         if(formattedConfig){
+            const nginxFormat = require('nginx-format').nginxFormat
             content = nginxFormat(content)
         }
 
