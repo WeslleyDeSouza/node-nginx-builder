@@ -1,6 +1,6 @@
 {
   "name": "nginx-builder",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "",
   "scripts": {
     "build": "tsc --build tsconfig.json",
@@ -14,11 +14,11 @@
   "author": "wes",
   "license": "ISC",
   "devDependencies": {
-    "@types/node": "^18.18.13",
+    "@types/node": ">=22.0.0",
     "typescript": "^5.3.2",
     "prettier": "2.6.2"
   },
   "dependencies": {
-    "nginx-format": "^0.1.7"
+    "nginx-format": "^0.1.8"
   }
 }
