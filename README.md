@@ -129,10 +129,9 @@ import { NginxBuilder } from 'nginx-builder'
 const nginxBuilder = new NginxBuilder(yourConfig);
 
 nginxBuilder.saveToFile(nginxBuilder.build(),{
-    encoding:  'utf8',
-    indent: '\t',
-    newLineSeparator: '\n',
-    maxStatementLength: 80, // if statement is longer than that it will be splitted into multiple lines
+    spaces: 2,            // Use 2 spaces for indentation
+    tabs: 0,              // No tabs (use spaces)
+    dontJoinCurlyBracet: true // Place curly braces on new lines
 })
 
 ```

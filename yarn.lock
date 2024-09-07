@@ -48,6 +48,11 @@ chevrotain@^10.5.0:
     lodash "4.17.21"
     regexp-to-ast "0.5.0"
 
+extend@^3.0.0:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/extend/-/extend-3.0.2.tgz#f8b1136b4071fbd8eb140aff858b1019ec2915fa"
+  integrity sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==
+
 lodash@4.17.21:
   version "4.17.21"
   resolved "https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz"
@@ -59,6 +64,13 @@ nginx-format@^0.1.8:
   integrity sha512-Z5vT/fSYRXbr0c+ZGDpGvBRHrxk+S1iSNfuMTiZYBq+NXbiLxGqFYU22Gj6wPobpkQXaxv9vtq8uRxk2MfxweQ==
   dependencies:
     chevrotain "^10.5.0"
+
+nginxbeautify@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/nginxbeautify/-/nginxbeautify-2.0.1.tgz#2f97e87dbbb9bb8796fdc5590c6abf769afeb654"
+  integrity sha512-1kecuWhbN2v/Q9cNYMAT1b7Cmx0HLuIfvdQZrxPsSCOxwbqbAIFpDp80OJ46kZkbeU6n3QKRlppyxu2+Sy9t4Q==
+  dependencies:
+    extend "^3.0.0"
 
 prettier@2.6.2:
   version "2.6.2"

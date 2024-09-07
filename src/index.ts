@@ -165,6 +165,12 @@ interface IOptions {
     }[];
 }
 
+export interface IParseOptions{
+    spaces: 2,            // Use 2 spaces for indentation
+    tabs: 0,              // No tabs (use spaces)
+    dontJoinCurlyBracet: true // Place curly braces on new lines
+}
+
 class NginxBuilderOptions {
     constructor(protected params: IOptions) {}
 
@@ -230,12 +236,13 @@ export class NginxBuilder {
 
     }
 
-    saveToFile(content, formattedConfig  = undefined){
+    saveToFile(content:string, formattedConfig?:IParseOptions){
         const  {fileName,outputPath} = this.config.getOutputOptions()
 
         if(formattedConfig){
-            const nginxFormat = require('nginx-format').nginxFormat
-            content = nginxFormat(content)
+            const Beautify = require('nginxbeautify');
+            let instance = new Beautify(formattedConfig)
+            content = instance.parse(content)
         }
 
         fs?.writeFileSync(
